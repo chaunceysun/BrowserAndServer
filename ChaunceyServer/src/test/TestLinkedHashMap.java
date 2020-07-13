@@ -10,14 +10,6 @@ public class TestLinkedHashMap {
         test.test();
         System.out.println("--------------------------------");
         test.testAccessOrder();
-
-        int a = 1;
-        int b = 2;
-        int c = 3;
-        a = b = c;
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(c);
     }
 
     private void testHashMap() {

@@ -32,9 +32,9 @@ public class ServerHandler extends Thread {
         System.out.println("读取消息");
 
         try {
-            InputStream is = socket.getInputStream();//基础字符流
-            Reader reader = new InputStreamReader(is);//字符流转化成字节流
-            BufferedReader br = new BufferedReader(reader);//高级流
+            InputStream is = socket.getInputStream();//基础字节流
+            Reader reader = new InputStreamReader(is);//字节流转化成字符流
+            BufferedReader br = new BufferedReader(reader);//高级流，可以读取一行
             String contentAndParams = br.readLine();
             parseContentAndParams(contentAndParams);
         } catch (IOException e) {
@@ -43,8 +43,7 @@ public class ServerHandler extends Thread {
     }
 
     /**
-     * 解析
-     * sourceName?key=value&key=value...
+     * 解析sourceName?key=value&key=value...
      */
     private void parseContentAndParams(String contentAndParams) {
         if (contentAndParams == null) {
@@ -64,16 +63,14 @@ public class ServerHandler extends Thread {
         } else {
             content = contentAndParams;
         }
-
         HttpServletRequest request = new HttpServletRequest(content, paramsMap);
         HttpServletResponse response = new HttpServletResponse();
-
         findController(request, response);
     }
 
     /**
-     * 处理
-     * controller或action或servlet
+     * 处理controller或action或servlet
+     * 用反射的方式查找控制层
      */
     private void findController(HttpServletRequest request, HttpServletResponse response) {
         //获取request对象中的请求名字
@@ -81,6 +78,10 @@ public class ServerHandler extends Thread {
         //参考配置文件
         Properties properties = new Properties();
         try {
+            //问题1：findController与其他方法做的事情不一致，不应该出现在这里
+            //问题2：多次读取文件造成性能下降，应该加个缓存
+            //问题3：controller需要规则来统一管理
+            //问题4：controller需要单例模式，并且被托管
             properties.load(new FileReader("ChaunceyServer\\src\\web.properties"));
             //通过配置文件找到对应的类名
             String realControllerName = properties.getProperty(content);
@@ -105,6 +106,10 @@ public class ServerHandler extends Thread {
         }
     }
 
+    /**
+     * 处理controller或action或servlet
+     * 用低级的条件判断的方式查找控制层
+     */
     private void findControllerOld(HttpServletRequest request, HttpServletResponse response) {
         if ("index".equals(request.getContent())) {
             IndexController ic = new IndexController();
