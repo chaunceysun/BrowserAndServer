@@ -65,7 +65,9 @@ public class ServerHandler extends Thread {
         }
         HttpServletRequest request = new HttpServletRequest(content, paramsMap);
         HttpServletResponse response = new HttpServletResponse();
-        findController(request, response);
+        ServletController.findController(request, response);
+
+        response2Browser(response);
     }
 
     /**
@@ -113,13 +115,21 @@ public class ServerHandler extends Thread {
     private void findControllerOld(HttpServletRequest request, HttpServletResponse response) {
         if ("index".equals(request.getContent())) {
             IndexController ic = new IndexController();
-            ic.test(request, response);
+            ic.service(request, response);
         }
     }
 
     /**
      * 响应
      */
-    private void response() {
+    private void response2Browser(HttpServletResponse response) {
+        System.out.println("返回消息");
+        try {
+            PrintWriter out = new PrintWriter(socket.getOutputStream());
+            out.println(response.getResponseContent());
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
