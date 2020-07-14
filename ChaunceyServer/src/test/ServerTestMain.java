@@ -8,5 +8,6 @@ import server.MyServer;
 public class ServerTestMain {
     public static void main(String[] args) {
         new MyServer().start();
+        System.out.println("asdf");
     }
 }
