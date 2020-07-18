@@ -5,7 +5,7 @@ import browser.MyBrowser;
 /**
  * @author Chauncey
  */
-public class BrowserTestMain {
+public class BrowserMain {
     public static void main(String[] args) {
         new MyBrowser().open();
     }

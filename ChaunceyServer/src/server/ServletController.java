@@ -19,6 +19,9 @@ import java.util.Properties;
 public class ServletController {
     //一个缓存，用来存储web.properties里的对应关系
     private static HashMap<String, String> controllerNameMap = new HashMap<>();
+    //添加一个集合，存储被管理的所有Controller类的对象
+    private static HashMap<String, HttpServlet> controllerObjectMap = new HashMap<>();
+    //延迟加载对象的机制，controllerObjectMap开始是空的，用到一个加入一个
 
     //创建一个静态块，在类加载的时候就读取配置文件到缓存（HashMap）中
     static {
@@ -39,15 +42,26 @@ public class ServletController {
     /**
      * 处理controller或action或servlet
      */
-    private void findController(HttpServletRequest request, HttpServletResponse response) {
+    static void findController(HttpServletRequest request, HttpServletResponse response) {
         String content = request.getContent();
         try {
-            String realControllerName=controllerNameMap.get(0);
+            HttpServlet controllerObject = controllerObjectMap.get(content);
+            if (controllerObject == null) {
+                String realControllerName = controllerNameMap.get(content);
+                if (realControllerName != null) {
+                    Class<?> clazz = Class.forName(realControllerName);
+                    controllerObject = (HttpServlet) clazz.newInstance();
+                    controllerObjectMap.put(content, controllerObject);
+                }
+            }
+            //以上可以确保controllerObject对象肯定存在
 
-            Class<?> clazz = Class.forName(realControllerName);
-            Object obj = clazz.newInstance();
-            Method method = clazz.getMethod("test", HttpServletRequest.class, HttpServletResponse.class);
-            method.invoke(obj, request, response);
+            Method method = controllerObject.getClass().getMethod("service", HttpServletRequest.class, HttpServletResponse.class);
+            method.invoke(controllerObject, request, response);
+        } catch (ClassNotFoundException e) {
+            response.write("404：请求的" + content + "Controller不存在");//404请求资源不存在
+        } catch (NoSuchMethodException e) {
+            response.write("405：没有可以执行的方法");
         } catch (Exception e) {
             e.printStackTrace();
         }
