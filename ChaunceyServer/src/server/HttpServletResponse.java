@@ -2,6 +2,8 @@ package server;
 
 /**
  * 存储响应信息
+ *
+ * @author chauncey
  */
 public class HttpServletResponse {
     private StringBuilder responseContent = new StringBuilder();

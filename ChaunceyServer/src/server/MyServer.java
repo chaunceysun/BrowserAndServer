@@ -4,13 +4,18 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * @author chauncey
+ */
 public class MyServer {
     public void start() {
         ServerSocket server = null;
         try {
             System.out.println("====启动服务器====");
+            //获取配置文件中的port
+            String port = ServerFileReader.getValue("port");
             //自己创建一个服务
-            server = new ServerSocket(9999);
+            server = new ServerSocket(Integer.parseInt(port));
             //等待某一个客户端来连接
             while (true) {
                 //等待某一个客户端过来连接

@@ -3,6 +3,9 @@ package test;
 import java.util.*;
 import java.util.Map.Entry;
 
+/**
+ * @author chauncey
+ */
 public class TestLinkedHashMap {
     public static void main(String[] args) {
         TestLinkedHashMap test = new TestLinkedHashMap();

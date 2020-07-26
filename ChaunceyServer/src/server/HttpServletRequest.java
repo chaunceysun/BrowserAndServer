@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 /**
  * 存储请求信息
+ *
+ * @author chauncey
  */
 public class HttpServletRequest {
     private String content;

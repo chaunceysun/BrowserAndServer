@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * @author chauncey
+ */
 public class IndexController extends HttpServlet {
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) {

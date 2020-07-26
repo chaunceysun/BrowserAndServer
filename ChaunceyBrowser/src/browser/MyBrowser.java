@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * @author chauncey
+ */
 public class MyBrowser {
     private Scanner input = new Scanner(System.in);
     private Socket socket;
