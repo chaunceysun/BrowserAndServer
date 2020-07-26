@@ -63,6 +63,7 @@ public class MyBrowser {
     }
 
     private void parseResponseContentAndShow(String responseContent) {
+        responseContent = responseContent.replace("<br>", "\r\n");
         System.out.println(responseContent);
     }
 }

@@ -28,5 +28,11 @@ public class IndexController extends HttpServlet {
         new IndexService();
         //3.将最终的业务层执行完毕的结果交还给服务器，让服务器写回给浏览器
         response.write(responseText.toString());
+        response.write("<br>");
+        response.write("********<br>");
+        response.write("**银行**<br>");
+        response.write("********<br>");
+        response.write("请输入账号<br>");
+        response.write("请输入密码<br>");
     }
 }
