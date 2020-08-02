@@ -13,6 +13,17 @@ import java.util.Map;
  * @author chauncey
  */
 public class IndexController extends HttpServlet {
+
+    /**
+     * 可以指向一个文件，把文件的内容（HTML）写回给浏览器，浏览器接到后解析
+     *
+     * @param request
+     * @param response
+     */
+    public void service1(HttpServletRequest request, HttpServletResponse response) {
+        response.sendRedirect("index.view");
+    }
+
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) {
         HashMap<String, String> paramsMap = request.getParamsMap();

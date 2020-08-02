@@ -32,9 +32,12 @@ public class ServerHandler extends Thread {
         System.out.println("读取消息");
 
         try {
-            InputStream is = socket.getInputStream();//基础字节流
-            Reader reader = new InputStreamReader(is);//字节流转化成字符流
-            BufferedReader br = new BufferedReader(reader);//高级流，可以读取一行
+            //基础字节流
+            InputStream is = socket.getInputStream();
+            //字节流转化成字符流
+            Reader reader = new InputStreamReader(is);
+            //高级流，可以读取一行
+            BufferedReader br = new BufferedReader(reader);
             String contentAndParams = br.readLine();
             parseContentAndParams(contentAndParams);
         } catch (IOException e) {
@@ -49,7 +52,7 @@ public class ServerHandler extends Thread {
         if (contentAndParams == null) {
             return;
         }
-        String content = null;
+        String content;
         HashMap<String, String> paramsMap = new HashMap<>(16);
         int questionMarkLocation = contentAndParams.indexOf("?");
         if (questionMarkLocation != -1) {
@@ -74,7 +77,7 @@ public class ServerHandler extends Thread {
      * 处理controller或action或servlet
      * 用反射的方式查找控制层
      */
-    private void findController(HttpServletRequest request, HttpServletResponse response) {
+    private void findControllerNew(HttpServletRequest request, HttpServletResponse response) {
         //获取request对象中的请求名字
         String content = request.getContent();
         //参考配置文件
@@ -121,6 +124,8 @@ public class ServerHandler extends Thread {
 
     /**
      * 响应
+     *
+     * @param response
      */
     private void response2Browser(HttpServletResponse response) {
         System.out.println("返回消息");

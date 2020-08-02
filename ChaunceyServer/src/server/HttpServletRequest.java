@@ -27,6 +27,10 @@ public class HttpServletRequest {
         this.content = content;
     }
 
+    public String getParameter(String key){
+        return paramsMap.get(key);
+    }
+
     public HashMap<String, String> getParamsMap() {
         return paramsMap;
     }

@@ -17,6 +17,7 @@ import java.util.Properties;
 //4.发现Controller类与之前的Service和Dao相似，只有方法执行，没有属性
 //      让Controller类的对象变成单例模式
 public class ServletController {
+
     //一个缓存，用来存储web.properties里的对应关系
     private static HashMap<String, String> controllerNameMap = new HashMap<>();
     //添加一个集合，存储被管理的所有Controller类的对象
