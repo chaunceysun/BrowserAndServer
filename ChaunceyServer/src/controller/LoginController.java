@@ -5,7 +5,8 @@ import server.HttpServletRequest;
 import server.HttpServletResponse;
 
 /**
- * @author chauncey
+ * @author Chauncey Sun
+ * @create 2022/10/18 23:01
  */
 public class LoginController extends HttpServlet {
 

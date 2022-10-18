@@ -8,7 +8,8 @@ import java.net.Socket;
 import java.util.Scanner;
 
 /**
- * @author chauncey
+ * @author Chauncey Sun
+ * @create 2022/10/18 23:00
  */
 public class MyBrowser {
     private Scanner input = new Scanner(System.in);
